@@ -1,0 +1,46 @@
+.gradle
+/build/
+/metastore_db/
+derby.log
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
+out/
+.git/
+.idea/
+*.iml
+/.gradle
+build/
+*.class
+classes/
+rebel.xml
+*.classpath
+*.project
+*.eml
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+####
+.txlcn/
+.DS_Store
+
+/logs/
+/db/
+/log/

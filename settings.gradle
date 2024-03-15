@@ -1,0 +1,11 @@
+rootProject.name = 'b-im'
+include 'common'
+include 'server'
+include 'client'
+include 'client:web'
+findProject(':client:web')?.name = 'web'
+include 'client:android'
+findProject(':client:android')?.name = 'android'
+include 'client:ios'
+findProject(':client:ios')?.name = 'ios'
+

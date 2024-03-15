@@ -1,0 +1,30 @@
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:4.26.0'
+    }
+    // generateProtoTasks.generatedFilesBaseDir = 'src'
+    generateProtoTasks {
+        // all() returns the collection of all protoc tasks
+        all().each { task ->
+            task.builtins {
+                remove java
+            }
+            task.builtins {
+                java {}
+            }
+        }
+    }
+}
+sourceSets {
+    main {
+        proto {
+            srcDirs 'src/main/resources/protobuf/'
+        }
+        java {
+            srcDirs 'src/main/java', 'generated-sources/main/java'
+        }
+    }
+}
+dependencies {
+
+}
