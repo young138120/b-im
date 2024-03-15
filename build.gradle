@@ -1,4 +1,7 @@
 buildscript {
+    ext {
+        nettyVersion = "4.1.107.Final"
+    }
     repositories {
         maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url "https://plugins.gradle.org/m2/" }
@@ -25,6 +28,9 @@ subprojects {
     apply plugin: 'com.github.johnrengelman.shadow'
     apply plugin: 'com.google.protobuf'
 
+    ext {
+        nettyVersion = "4.1.107.Final"
+    }
     sourceCompatibility = "17"
 
     repositories {
@@ -45,6 +51,8 @@ subprojects {
 
     dependencies {
         implementation 'com.google.protobuf:protobuf-java:4.26.0'
+        // protobuf ->json 工具
+        implementation 'com.google.protobuf:protobuf-java-util:4.26.0'
 
         //utils
         implementation group: 'commons-io', name: 'commons-io', version: '2.6'

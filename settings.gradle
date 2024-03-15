@@ -8,4 +8,6 @@ include 'client:android'
 findProject(':client:android')?.name = 'android'
 include 'client:ios'
 findProject(':client:ios')?.name = 'ios'
+include 'client:fake'
+findProject(':client:fake')?.name = 'fake'
 

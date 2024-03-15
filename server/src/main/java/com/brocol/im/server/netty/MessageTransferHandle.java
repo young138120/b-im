@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.brocol.im.common.protobuf.MessageProtobuf;
 import com.brocol.im.server.connection.ConnectionManager;
 import com.brocol.im.server.netty.entity.ChannelInfo;
+import com.google.protobuf.util.JsonFormat;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.slf4j.Logger;
@@ -57,7 +58,7 @@ public class MessageTransferHandle extends ChannelInboundHandlerAdapter {
         int msgType = message.getHead().getMsgType();
         switch (msgType) {
             // 握手消息
-            case 1001: {
+            case 1001 -> {
                 String sender = message.getHead().getSender();
                 JSONObject jsonObj = JSON.parseObject(message.getHead().getExtend());
                 String token = jsonObj.getString("token");
@@ -70,21 +71,17 @@ public class MessageTransferHandle extends ChannelInboundHandlerAdapter {
                     resp.put("status", -1);
                     ConnectionManager.getInstance().removeChannelIfConnectNoActive(ctx.channel());
                 }
-
+                LOGGER.info("read message ->{}", JsonFormat.printer().print(message));
                 message = message.toBuilder().setHead(message.getHead().toBuilder().setExtend(resp.toString()).build()).build();
                 ConnectionManager.getInstance().getActiveChannelByUserId(sender).getChannel().writeAndFlush(message);
-                break;
             }
-
             // 心跳消息
-            case 1002: {
+            case 1002 -> {
                 // 收到心跳消息，原样返回
                 String sender = message.getHead().getSender();
                 ConnectionManager.getInstance().getActiveChannelByUserId(sender).getChannel().writeAndFlush(message);
-                break;
             }
-
-            case 2001: {
+            case 2001 -> {
                 // 收到2001或3001消息，返回给客户端消息发送状态报告
                 String sender = message.getHead().getSender();
                 MessageProtobuf.Msg.Builder sentReportMsgBuilder = MessageProtobuf.Msg.newBuilder();
@@ -99,13 +96,9 @@ public class MessageTransferHandle extends ChannelInboundHandlerAdapter {
                 // 同时转发消息到接收方
                 String receiver = message.getHead().getReceiver();
                 ConnectionManager.getInstance().getActiveChannelByUserId(receiver).getChannel().writeAndFlush(message);
-                break;
             }
-            case 3001: {
-                break;
+            default -> {
             }
-            default:
-                break;
         }
     }
 }
